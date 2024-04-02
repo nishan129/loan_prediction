@@ -3,5 +3,6 @@ notebook
 numpy
 scikit-learn
 matplotlib
+from_root
 
 -e .
