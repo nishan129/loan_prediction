@@ -3,3 +3,5 @@ notebook
 numpy
 scikit-learn
 matplotlib
+
+-e .
