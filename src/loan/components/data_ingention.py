@@ -4,6 +4,7 @@ from src.loan.entity.config_entity import DataIngestionConfig
 from src.loan.entity.artifact_entity import DataIngestionArtifact
 from src.loan.data_acess.loan_data import LoanData
 import sys,os
+from sklearn.model_selection import train_test_split
 from pandas import DataFrame
 
 
@@ -40,7 +41,16 @@ class DataIngestion:
         
     def split_data_as_train_test(self, dataframe:DataFrame) -> None:
         try:
-            pass
+            train_set, test_set = train_test_split(
+                dataframe,
+                test_size=self.data_ingenstion_config.train_test_split_ratio)
+            
+            dir_path = os.path.dirname(self.data_ingenstion_config.training_file_path)
+            os.makedirs(dir_path,exist_ok=True)
+            dir_path = os.path.dirname(self.data_ingenstion_config.testing_file_path)
+            os.makedirs(dir_path,exist_ok=True)
+            train_set.to_parquet(self.data_ingenstion_config.training_file_path,index=False)
+            test_set.to_parquet(self.data_ingenstion_config.testing_file_path,index=False)
         except Exception as e:
             raise ModelException(e,sys)
         
