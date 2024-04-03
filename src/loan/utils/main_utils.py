@@ -1,6 +1,8 @@
 from src.loan.exception import ModelException
 import sys,os
 import yaml
+import dill
+import numpy as np
 
 def read_yaml_file(file_path:str) -> dict:
     try:
@@ -21,6 +23,39 @@ def write_yaml_file(filename: str, data, replace:bool = False) -> None:
     except Exception as e:
         raise ModelException(e,sys)
     
-def writ_yaml_file(data, filename):
-    with open(filename, 'w') as file:
-        yaml.dump(data, file, default_flow_style=False)
+def save_numpy_array_data(file_path:str,array:np.array):
+    """
+    save data numpy array
+    """
+    try:
+        dir_path = os.path.dirname(file_path)
+        os.makedirs(dir_path,exist_ok=True)
+        
+        with open(file_path, 'wb') as file:
+            np.save(file,array)
+    except Exception as e:
+        raise ModelException(e,sys)
+        
+def load_numpy_array_data(file_path:str) -> np.array:
+    try:
+        with open(file_path,'rb') as file:
+            return np.load(file)
+    except Exception as e:
+        raise ModelException(e,sys)
+    
+
+def save_object(file_path:str, object:object) -> None:
+    try:
+        os.makedirs(os.path.dirname(file_path),exist_ok=True)
+        with open(file_path,'wb') as file:
+            dill.dump(object,file)
+    except Exception as e:
+        raise ModelException(e,sys)
+    
+def load_object(file_path:str) -> object:
+    try:
+        os.makedirs(os.path.dirname(file_path),exist_ok=True)
+        with open(file_path,'rb') as file:
+            dill.load(file_path)
+    except Exception as e:
+        raise ModelException(e,sys)

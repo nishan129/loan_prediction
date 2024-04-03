@@ -7,4 +7,6 @@ from_root
 pymongo[srv]
 pyarrow
 PyYAML
+imblearn==0.0
+dill
 -e .
