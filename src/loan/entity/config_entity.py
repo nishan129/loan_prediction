@@ -1,4 +1,5 @@
 from src.loan.constant.trainingpipeline import PIPELINE_NAME, ARTIFACT_DIR, DATA_INGESTION_DIR_NAME,DATA_INGESTION_COLLECTION_NAME,TRAIN_FILE_NAME,FILE_NAME,TEST_FILE_NAME, DATA_INGESTION_FEATURE_STORE_DIR,DATA_INGESTION_TRAIN_TEST_SPLIT_RATION
+from src.loan.constant import trainingpipeline
 import os
 from datetime import datetime
 
@@ -26,3 +27,27 @@ class DataIngestionConfig:
         
         self.train_test_split_ratio: float = DATA_INGESTION_TRAIN_TEST_SPLIT_RATION
         self.collection_name: str = DATA_INGESTION_COLLECTION_NAME
+        
+class DataValidationConfig:
+    def __init__(self,traning_pipeline_config:TrainingPipelineConfig):
+        # Data Validation direcotry
+        self.data_validation_dir:str = os.path.join(traning_pipeline_config.artifact_dir,
+                                               trainingpipeline.DATA_VALIDATION_DIR_NAME)
+        # Data Validation directory for valid train data and test data
+        self.valid_data_dir:str = os.path.join(self.data_validation_dir,
+                                                      trainingpipeline.DATA_VALIDATION_VALID_DIR)
+        self.valid_train_file_path:str = os.path.join(self.valid_data_dir,
+                                                      trainingpipeline.TRAIN_FILE_NAME)
+        self.valid_test_file_path:str = os.path.join(self.valid_data_dir,
+                                                     trainingpipeline.TEST_FILE_NAME)
+        # Data validation directory for invalid train data and test data
+        self.invalid_data_dir:str = os.path.join(self.data_validation_dir,
+                                                            trainingpipeline.DATA_VALIDATION_INVALID_DIR)
+        self.invalid_train_file_path:str = os.path.join(self.invalid_data_dir,
+                                                        trainingpipeline.TRAIN_FILE_NAME)
+        self.invalid_test_file_path:str = os.path.join(self.invalid_data_dir,
+                                                       trainingpipeline.TEST_FILE_NAME)
+        # Data validation dircotory for data validation drift report 
+        self.drift_report_file_path:str = os.path.join(self.data_validation_dir,
+                                                                 trainingpipeline.DATA_VALIDATION_DRIFT_REPORT_DIR,
+                                                                 trainingpipeline.DATA_VALIDATION_DRIFT_REPORT_FILE_NAME)

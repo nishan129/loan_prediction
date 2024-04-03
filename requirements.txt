@@ -1,9 +1,10 @@
-pandas
+#pandas
 notebook
-numpy
+#numpy
 scikit-learn
-matplotlib
+#matplotlib
 from_root
 pymongo[srv]
 pyarrow
+PyYAML
 -e .

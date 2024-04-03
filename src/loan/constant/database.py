@@ -1,2 +1,2 @@
 
-DATABASE_NAME = 'Loan'
+DATABASE_NAME = 'Lona'

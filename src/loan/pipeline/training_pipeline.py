@@ -1,32 +1,39 @@
-from src.loan.entity.config_entity import TrainingPipelineConfig, DataIngestionConfig
+from src.loan.entity.config_entity import TrainingPipelineConfig, DataIngestionConfig, DataValidationConfig
 from src.loan.exception import ModelException
 from src.loan.logger import logging
 from src.loan.components.data_ingention import DataIngestion
-from src.loan.entity.artifact_entity import DataIngestionArtifact
+from src.loan.components.data_validation import DataValidation
+from src.loan.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact
 import sys
 
 class TrainPipeline:
     def __init__(self):
         self.trainig_pipeline_config = TrainingPipelineConfig()
-        self.data_ingestion_config = DataIngestionConfig(traning_pipeline_config=self.trainig_pipeline_config)
+        
         
         
         #self.trainig_pipeline_config= trainig_pipeline_config
         
         
-    def start_data_ingestion(self) -> DataIngestionArtifact:
+    def start_data_ingestion(self) ->DataIngestionArtifact:
         try:
+            data_ingestion_config = DataIngestionConfig(traning_pipeline_config=self.trainig_pipeline_config)
             logging.info("Start data ingestion")
-            data_ingestion = DataIngestion(data_ingenstion_config=self.data_ingestion_config)
+            data_ingestion = DataIngestion(data_ingenstion_config=data_ingestion_config)
             data_ingestion_artifact = data_ingestion.initiate_data_ingestion()
             logging.info(f"data ingestion completed successfully and artifact is {data_ingestion_artifact}")
             return data_ingestion_artifact
         except Exception as e:
             raise ModelException(e,sys)
             
-    def start_data_validation(self):
+    def start_data_validation(self,data_ingestion_artifact:DataIngestionArtifact)-> DataValidationArtifact:
         try:
-            pass
+            data_validation_config = DataValidationConfig(traning_pipeline_config=self.trainig_pipeline_config)
+            logging.info("Start data validation")
+            data_validation = DataValidation(data_ingenstion_artifact=data_ingestion_artifact,
+                                             data_validation_config=data_validation_config)
+            data_validation_artifact = data_validation.initiate_data_validation()
+            logging.info(f"data validation completed successfully and artifact is {data_validation_artifact}")
         except Exception as e:
             raise ModelException(e,sys)
         
@@ -57,5 +64,6 @@ class TrainPipeline:
     def run_pipeline(self):
         try:
             data_ingenstion_artifact:DataIngestionArtifact = self.start_data_ingestion()
+            data_validation_artifact: DataValidationArtifact = self.start_data_validation(data_ingestion_artifact=data_ingenstion_artifact)
         except Exception as e: 
             raise ModelException(e,sys)

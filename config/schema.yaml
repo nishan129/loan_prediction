@@ -1,0 +1,42 @@
+columns:
+  - class: category
+  - aa_000: int
+  - ac_000: int
+  - ad_000: int
+  - ae_000: int
+  - af_000: int
+  - ag_000: int
+  - ag_001: int
+  - ag_002: int
+columns:
+  - Id: int
+  - Income: int
+  - Age: int
+  - Experience: int
+  - Married/Single: category
+  - House_Ownership: category
+  - Car_Ownership: category
+  - Profession: category
+  - CITY: category
+  - STATE: category
+  - CURRENT_JOB_YRS: int
+  - CURRENT_HOUSE_YRS: int
+  - Risk_Flag: int
+
+categorical_columns:
+  - Married/Single
+  - House_Ownership
+  - Car_Ownership
+  - Profession
+  - CITY
+  - STATE
+
+
+numerical_columns:
+  - Id
+  - Income
+  - Age
+  - Experience
+  - CURRENT_JOB_YRS
+  - CURRENT_HOUSE_YRS
+  - Risk_Flag
