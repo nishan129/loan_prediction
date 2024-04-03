@@ -4,5 +4,6 @@ numpy
 scikit-learn
 matplotlib
 from_root
+pymongo[srv]
 
 -e .
