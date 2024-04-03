@@ -40,3 +40,4 @@ class LoanData:
             return df
         except Exception as e:
             raise ModelException(e,sys)
+        

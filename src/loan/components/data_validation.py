@@ -84,9 +84,7 @@ class DataValidation:
                                         "drift_status": is_found}})
             drift_report_file_path = self.data_validation_config.drift_report_file_path
             
-            file_path = os.path.dirname(drift_report_file_path)
-            os.makedirs(file_path,exist_ok=True)
-            write_yaml_file(filename=file_path,data=report)
+            write_yaml_file(filename=drift_report_file_path,data=report)
             return status
         except Exception as e:
             raise ModelException(e,sys)
