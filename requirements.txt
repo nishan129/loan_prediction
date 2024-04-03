@@ -5,5 +5,5 @@ scikit-learn
 matplotlib
 from_root
 pymongo[srv]
-
+pyarrow
 -e .
