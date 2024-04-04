@@ -25,7 +25,7 @@ class DataTransform:
     @staticmethod   
     def read_data(filepath) -> pd.DataFrame:
         try:
-            df  = pd.read_parquet(filepath)
+            df  = pd.read_csv(filepath)
             return df 
         except Exception as e:
             raise ModelException(e,sys)

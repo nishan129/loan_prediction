@@ -34,7 +34,7 @@ class DataIngestion:
             dir_path = os.path.dirname(feature_store_file_path)
             os.makedirs(dir_path,exist_ok=True)
             
-            df.to_parquet(feature_store_file_path,index=False)
+            df.to_csv(feature_store_file_path,index=False)
             return df
         except Exception as e:
             raise ModelException(e,sys)
@@ -49,8 +49,8 @@ class DataIngestion:
             os.makedirs(dir_path,exist_ok=True)
             dir_path = os.path.dirname(self.data_ingenstion_config.testing_file_path)
             os.makedirs(dir_path,exist_ok=True)
-            train_set.to_parquet(self.data_ingenstion_config.training_file_path,index=False)
-            test_set.to_parquet(self.data_ingenstion_config.testing_file_path,index=False)
+            train_set.to_csv(self.data_ingenstion_config.training_file_path,index=False)
+            test_set.to_csv(self.data_ingenstion_config.testing_file_path,index=False)
         except Exception as e:
             raise ModelException(e,sys)
         

@@ -54,8 +54,9 @@ def save_object(file_path:str, object:object) -> None:
     
 def load_object(file_path:str) -> object:
     try:
-        os.makedirs(os.path.dirname(file_path),exist_ok=True)
+        if not os.path.exists(file_path):
+            raise Exception(f"The file path{file_path} is not exists")
         with open(file_path,'rb') as file:
-            dill.load(file_path)
+            dill.load(file)
     except Exception as e:
         raise ModelException(e,sys)

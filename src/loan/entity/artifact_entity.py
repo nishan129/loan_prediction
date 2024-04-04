@@ -20,3 +20,15 @@ class DataTransformationArtifact:
     transformed_train_filepath: str
     transformed_test_filepath: str
     
+    
+@dataclass(frozen=True)
+class ClassificationMetricArtifact:
+    f1_score: float
+    precision_score: float
+    recall_score: float
+
+@dataclass(frozen=True)
+class ModelTrainerArtifact:
+    trained_model_file_path: str
+    train_metric_artifact : ClassificationMetricArtifact
+    test_metric_artifact : ClassificationMetricArtifact
