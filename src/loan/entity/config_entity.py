@@ -59,12 +59,12 @@ class DataTransformationConfig:
         
         self.transformed_train_file_path:str = os.path.join(self.data_transformation_dir,
                                                             trainingpipeline.DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
-                                                            trainingpipeline.TRAIN_FILE_NAME.replace("csv","npy")) 
+                                                            trainingpipeline.TRAIN_FILE_NAME.replace("parquet","npy")) 
         
         self.transformed_test_file_path: str = os.path.join(self.data_transformation_dir,
                                                             trainingpipeline.DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
-                                                            trainingpipeline.TEST_FILE_NAME.replace('csv','npy'))
+                                                            trainingpipeline.TEST_FILE_NAME.replace('parquet','npy'))
         
-        self.data_transformation_transform_object_dir: str = os.path.join(self.data_transformation_dir,
+        self.transformed_object_filepath: str = os.path.join(self.data_transformation_dir,
                                                                      trainingpipeline.DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR,
                                                                      trainingpipeline.PREPROCSSING_OBJECT_FILE_NAME)

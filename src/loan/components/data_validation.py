@@ -2,7 +2,7 @@ from src.loan.constant.trainingpipeline import SCHEMA_FILE_PATH
 from src.loan.entity.artifact_entity import DataIngestionArtifact,DataValidationArtifact
 from src.loan.entity.config_entity import DataValidationConfig
 from src.loan.logger import logging
-from src.loan.utils.main_utils import read_yaml_file, write_yaml_file,writ_yaml_file
+from src.loan.utils.main_utils import read_yaml_file, write_yaml_file
 import sys,os
 from scipy.stats import ks_2samp
 from src.loan.exception import ModelException
@@ -140,5 +140,6 @@ class DataValidation:
                 drift_report_file_path=self.data_validation_config.drift_report_file_path
             )
             logging.info(f"Data validation artifact: {data_validation_artifacts}")
+            return data_validation_artifacts
         except Exception as e:
             raise ModelException(e,sys)

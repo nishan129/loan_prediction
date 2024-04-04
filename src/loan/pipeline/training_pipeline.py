@@ -1,9 +1,10 @@
-from src.loan.entity.config_entity import TrainingPipelineConfig, DataIngestionConfig, DataValidationConfig
+from src.loan.entity.config_entity import TrainingPipelineConfig, DataIngestionConfig, DataValidationConfig, DataTransformationConfig
 from src.loan.exception import ModelException
 from src.loan.logger import logging
 from src.loan.components.data_ingention import DataIngestion
 from src.loan.components.data_validation import DataValidation
-from src.loan.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact
+from src.loan.components.data_transformation import DataTransform
+from src.loan.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact
 import sys
 
 class TrainPipeline:
@@ -33,13 +34,21 @@ class TrainPipeline:
             data_validation = DataValidation(data_ingenstion_artifact=data_ingestion_artifact,
                                              data_validation_config=data_validation_config)
             data_validation_artifact = data_validation.initiate_data_validation()
+            
             logging.info(f"data validation completed successfully and artifact is {data_validation_artifact}")
+            return data_validation_artifact
         except Exception as e:
             raise ModelException(e,sys)
         
-    def start_data_preparation(self):
+    def start_data_preprocessing(self,data_validation_artifact:DataValidationArtifact) -> DataTransformationArtifact:
         try:
-            pass
+            data_transformation_config = DataTransformationConfig(self.trainig_pipeline_config)
+            logging.info(f'Start Data Transformation')
+            data_transformation = DataTransform(data_validation_artifact=data_validation_artifact,
+                                                data_transformation_config=data_transformation_config)
+            data_transformation_artifact = data_transformation.initiat_data_transform()
+            logging.info(f"Data Transformation is complete {data_transformation_artifact}")
+            return data_transformation_artifact
         except Exception as e:
             raise ModelException(e,sys)
         
@@ -65,5 +74,6 @@ class TrainPipeline:
         try:
             data_ingenstion_artifact:DataIngestionArtifact = self.start_data_ingestion()
             data_validation_artifact: DataValidationArtifact = self.start_data_validation(data_ingestion_artifact=data_ingenstion_artifact)
+            data_transformation_artifact: DataTransformationArtifact = self.start_data_preprocessing(data_validation_artifact)
         except Exception as e: 
             raise ModelException(e,sys)
