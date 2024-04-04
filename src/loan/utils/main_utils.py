@@ -3,6 +3,7 @@ import sys,os
 import yaml
 import dill
 import numpy as np
+import tensorflow as tf
 
 def read_yaml_file(file_path:str) -> dict:
     try:
@@ -52,6 +53,8 @@ def save_object(file_path:str, object:object) -> None:
     except Exception as e:
         raise ModelException(e,sys)
     
+   
+    
 def load_object(file_path:str) -> object:
     try:
         if not os.path.exists(file_path):
@@ -60,3 +63,14 @@ def load_object(file_path:str) -> object:
             dill.load(file)
     except Exception as e:
         raise ModelException(e,sys)
+    
+    
+    
+    
+def save_model(file_path:str, model) -> None:
+    try:
+        os.makedirs(os.path.dirname(file_path), exist_ok= True)
+        with open(file_path, 'wb') as file:
+            tf.saved_model.save(model,file)
+    except Exception as e:
+        raise ModelException(e,sys) 

@@ -1,13 +1,15 @@
 from src.loan.entity.artifact_entity import ClassificationMetricArtifact
 from src.loan.exception import ModelException
 import sys,os
+import numpy as np
 from sklearn.metrics import f1_score,precision_score, recall_score
 
-def get_classification_score(y_true,y_pred) -> ClassificationMetricArtifact:
+def get_classification_score(y_true,y_pred)->ClassificationMetricArtifact :
     try:
-        f1_scor = f1_score(y_true=y_true,y_pred=y_pred)
-        precision = precision_score(y_pred=y_pred,y_true=y_true)
-        recall = recall_score(y_true=y_true,y_pred=y_pred)
+        pred = np.where(y_pred >= 0.5,1,0)
+        f1_scor = f1_score(y_true=y_true,y_pred=pred)
+        precision = precision_score(y_pred=pred,y_true=y_true)
+        recall = recall_score(y_true=y_true,y_pred=pred)
         
         classification_metric_artifact =  ClassificationMetricArtifact(
             f1_score=f1_scor,
