@@ -3,13 +3,14 @@ from src.loan.logger import logging
 from src.loan.entity.config_entity import ModelEvaluationConfig
 from src.loan.entity.artifact_entity import ModelEvaluationArtifact, ModelTrainerArtifact, DataValidationArtifact, DataTransformationArtifact
 import os, sys
-from src.loan.utils.main_utils import load_object, write_yaml_file
+from src.loan.utils.main_utils import load_object, write_yaml_file, save_json
 from urllib.parse import urlparse
 from src.loan.constant.trainingpipeline import TARGET_COLUMN
 from src.loan.ml.model.metrics import get_classification_score
 import mlflow
 import mlflow.keras
 import tensorflow as tf
+from pathlib import Path
 import pandas as pd
 
 
@@ -55,9 +56,9 @@ class ModelEvaluation:
             
             X_data_preproces = preprocesor.transform(X_data)
             predict = self.model.predict(X_data_preproces)
-            
+            #self.score = self.model.evaluate(X_data, y_data)
             self.train_metric = get_classification_score(y_true=y_data,y_pred=predict)
-            write_yaml_file(filename=self.model_evaluation_config.report_file_name,data=self.train_metric)
+            #write_yaml_file(filename=self.model_evaluation_config.report_file_name,data=self.train_metric)
             model_evaluation_artifact = ModelEvaluationArtifact(model_evaluation_dir=self.model_evaluation_config.model_evaluation_dir,
                                                                 report_file_name=self.model_evaluation_config.report_file_name,
                                                                 train_model_metric_artifact=self.train_metric,
@@ -67,7 +68,11 @@ class ModelEvaluation:
             return model_evaluation_artifact
         except Exception as e:
             raise ModelException(e,sys)
-
+        
+    def save_score(self):
+        scores = {"loss": self.score[0], "accuracy": self.score[1]}
+        save_json(path=Path("scores.json"), data=scores)
+        
     def log_into_mlflow(self):
         try:
             
@@ -77,7 +82,7 @@ class ModelEvaluation:
             with mlflow.start_run():
                 mlflow.log_params(self.all_params)
                 mlflow.log_metrics(
-                {"f1_score": self.train_metric.f1_score, "precision": self.train_metric.precision_score,
+                {"accuracy":self.train_metric.accuracy_score,"f1_score": self.train_metric.f1_score, "precision": self.train_metric.precision_score,
                  "recall":self.train_metric.recall_score}
                 )
             # Model registry does not work with file store

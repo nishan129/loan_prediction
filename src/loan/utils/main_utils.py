@@ -4,6 +4,9 @@ import yaml
 import dill
 import numpy as np
 import tensorflow as tf
+from src.loan.logger import logging
+import json
+from pathlib import Path
 
 def read_yaml_file(file_path:str) -> dict:
     try:
@@ -74,3 +77,15 @@ def save_model(file_path:str, model) -> None:
             tf.saved_model.save(model,file)
     except Exception as e:
         raise ModelException(e,sys) 
+    
+def save_json(path: Path, data: dict):
+    """save json data
+
+    Args:
+        path (Path): path to json file
+        data (dict): data to be saved in json file
+    """
+    with open(path, "w") as f:
+        json.dump(data, f, indent=4)
+
+    logging.info(f"json file saved at: {path}")

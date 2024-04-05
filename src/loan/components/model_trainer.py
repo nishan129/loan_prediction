@@ -54,8 +54,8 @@ class ModelTrainer:
             Model = ann_classifier.build_model()
             logging.info("Model Building end")
             logging.info("Model Training is start")
-            early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
-            history = Model.fit(X_train,y_train,epochs=self.config['EPOCHS'],batch_size=self.config['BATCH_SIZE'],callbacks=[early_stopping],validation_data=(X_test,y_test))
+            #early_stopping = EarlyStopping(monitor='val_loss', patience=7, verbose=1)
+            history = Model.fit(X_train,y_train,epochs=self.config['EPOCHS'],batch_size=self.config['BATCH_SIZE'],validation_data=(X_test,y_test))#,callbacks=[early_stopping]
             logging.info("Model Training is done")
             logging.info(f"Model Accuracy is {history.history['accuracy'][-1]}. And Model loss is {history.history['loss'][-1]}. And Val Accuracy is {history.history['val_accuracy'][-1]}. And Validation loss is {history.history['val_loss'][-1]}")
             # Classification metrics for Train set

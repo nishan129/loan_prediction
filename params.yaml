@@ -1,8 +1,8 @@
 
-BATCH_SIZE: 123
-EPOCHS: 100
+BATCH_SIZE: 70
+EPOCHS: 1
 OPTIMIZER : "Adam"
 LOSS : "binary_crossentropy"
 METRIC : "accuracy"
-EPOCHS : 1
+
 
