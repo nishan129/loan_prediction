@@ -1,0 +1,8 @@
+
+BATCH_SIZE: 0
+EPOCHS: 1
+OPTIMIZER : "Adam"
+LOSS : "binary_crossentropy"
+METRIC : "accuracy"
+EPOCHS : 1
+

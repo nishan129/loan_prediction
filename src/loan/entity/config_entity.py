@@ -2,6 +2,7 @@ from src.loan.constant.trainingpipeline import PIPELINE_NAME, ARTIFACT_DIR, DATA
 from src.loan.constant import trainingpipeline
 import os
 from datetime import datetime
+from src.loan.utils.main_utils import read_yaml_file
 
 class TrainingPipelineConfig:
     def __init__(self, timestamp= datetime.now()):
@@ -9,6 +10,8 @@ class TrainingPipelineConfig:
         self.pipeline_name: str = PIPELINE_NAME
         self.artifact_dir: str = os.path.join(ARTIFACT_DIR)
         self.timestamp: str = timestamp
+        self.config = read_yaml_file(trainingpipeline.SCHEMA_FILE_PATH)
+        self.all_params = read_yaml_file(trainingpipeline.PARAMS_FILE_PATH)
         
 class DataIngestionConfig:
     def __init__(self, traning_pipeline_config:TrainingPipelineConfig):
@@ -77,5 +80,14 @@ class ModelTrainerConfig:
                                                                 trainingpipeline.MODEL_TRAINER_TRAINED_MODEL_DIR,
                                                                 trainingpipeline.MODEL_TRAINER_TRAINED_MODEL_NAME)
         self.excepted_accuracy: float = trainingpipeline.MODEL_TRAINER_EXPECTED_SCORE
+        
+class ModelEvaluationConfig:
+    def __init__(self,training_pipeline_config: TrainingPipelineConfig):
+        self.model_evaluation_dir: str = os.path.join(training_pipeline_config.artifact_dir,
+                                                      trainingpipeline.MODEL_EVALUATION_DIR_NAME)
+        self.report_file_name: str = os.path.join(self.model_evaluation_dir,
+                                                  trainingpipeline.MODEL_EVALUATION_REPORT_NAME)
+        self.mlflow_uri: str = trainingpipeline.MLFLOW_URI
+        self.all_params = training_pipeline_config.all_params
         
         

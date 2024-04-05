@@ -60,7 +60,7 @@ def load_object(file_path:str) -> object:
         if not os.path.exists(file_path):
             raise Exception(f"The file path{file_path} is not exists")
         with open(file_path,'rb') as file:
-            dill.load(file)
+            return dill.load(file)
     except Exception as e:
         raise ModelException(e,sys)
     

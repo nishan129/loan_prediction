@@ -2,9 +2,9 @@ from src.loan.logger import logging
 from src.loan.exception import ModelException
 from src.loan.entity.config_entity import ModelTrainerConfig
 from src.loan.entity.artifact_entity import ModelTrainerArtifact, DataTransformationArtifact
-from src.loan.utils.main_utils import  load_numpy_array_data, load_object, save_object
+from src.loan.utils.main_utils import  load_numpy_array_data, read_yaml_file
 from src.loan.ml.model.model import ANNClassifier
-from src.loan.constant.trainingpipeline import BATCH_SIZE,EPOCHS
+from src.loan.constant.trainingpipeline import *
 from src.loan.ml.model.metrics import get_classification_score
 from src.loan.ml.model.estimator import LoanModel
 from tensorflow.keras.callbacks import EarlyStopping
@@ -16,6 +16,7 @@ class ModelTrainer:
         try:
             self.model_trainer_config = model_trainer_config
             self.data_transformation_artifact = data_transformation_artifact
+            self.config = read_yaml_file(file_path=PARAMS_FILE_PATH)
         except Exception as e:
             raise ModelException(e, sys)
         
@@ -54,14 +55,14 @@ class ModelTrainer:
             logging.info("Model Building end")
             logging.info("Model Training is start")
             early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=1)
-            history = Model.fit(X_train,y_train,epochs=EPOCHS,batch_size=BATCH_SIZE,callbacks=[early_stopping],validation_data=(X_test,y_test))
+            history = Model.fit(X_train,y_train,epochs=self.config['EPOCHS'],batch_size=self.config['BATCH_SIZE'],callbacks=[early_stopping],validation_data=(X_test,y_test))
             logging.info("Model Training is done")
             logging.info(f"Model Accuracy is {history.history['accuracy'][-1]}. And Model loss is {history.history['loss'][-1]}. And Val Accuracy is {history.history['val_accuracy'][-1]}. And Validation loss is {history.history['val_loss'][-1]}")
             # Classification metrics for Train set
             train_pred = Model.predict(X_train)
             classification_metrics_train = get_classification_score(y_true=y_train,y_pred=train_pred)
-            # if classification_metrics_train.f1_score >= self.model_trainer_config.excepted_accuracy:
-            #     raise Exception("Train model is not good to provide accepted accuracy")
+            if classification_metrics_train.f1_score <= self.model_trainer_config.excepted_accuracy:
+                raise Exception("Train model is not good to provide accepted accuracy")
             
             # classification metrics for Test set
             predict = Model.predict(X_test)

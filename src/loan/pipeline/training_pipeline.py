@@ -1,11 +1,12 @@
-from src.loan.entity.config_entity import TrainingPipelineConfig, DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig
+from src.loan.entity.config_entity import TrainingPipelineConfig, DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig, ModelEvaluationConfig
 from src.loan.exception import ModelException
 from src.loan.logger import logging
 from src.loan.components.data_ingention import DataIngestion
 from src.loan.components.data_validation import DataValidation
 from src.loan.components.data_transformation import DataTransform
 from src.loan.components.model_trainer import ModelTrainer
-from src.loan.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ModelTrainerArtifact
+from src.loan.components.model_evaluation import ModelEvaluation
+from src.loan.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ModelTrainerArtifact, ModelEvaluationArtifact
 import sys
 
 class TrainPipeline:
@@ -65,9 +66,19 @@ class TrainPipeline:
         except Exception as e:
             raise ModelException(e,sys)
         
-    def start_model_evaluation(self):
+    def start_model_evaluation(self,model_trainer_artifacts:ModelTrainerArtifact,
+                               data_transformation_artifact:DataTransformationArtifact,
+                               data_validation_artifact:DataValidationArtifact) -> ModelEvaluationArtifact:
         try:
-            pass
+            model_evaluation_config = ModelEvaluationConfig(self.trainig_pipeline_config)
+            logging.info("Start Model evaluation")
+            model_evaluation = ModelEvaluation(model_evaluation_config=model_evaluation_config,
+                                               model_trainer_artifact=model_trainer_artifacts,
+                                               data_transformation_artifact=data_transformation_artifact,
+                                               data_validation_artifact=data_validation_artifact)
+            model_evaluation_artifacts = model_evaluation.initiat_model_evaluation()
+            model_evaluation.log_into_mlflow()
+            logging.info("Model Evaluation is complete")
         except Exception as e:
             raise ModelException(e,sys)
         
@@ -83,5 +94,8 @@ class TrainPipeline:
             data_validation_artifact: DataValidationArtifact = self.start_data_validation(data_ingestion_artifact=data_ingenstion_artifact)
             data_transformation_artifact: DataTransformationArtifact = self.start_data_preprocessing(data_validation_artifact)
             model_trainer_artifact: ModelTrainerArtifact = self.start_model_training(data_transformation_artifact=data_transformation_artifact)
+            model_evaluation_artifact: ModelEvaluationArtifact = self.start_model_evaluation(model_trainer_artifacts=model_trainer_artifact,
+                                                                                             data_transformation_artifact=data_transformation_artifact,
+                                                                data_validation_artifact=data_validation_artifact)
         except Exception as e: 
             raise ModelException(e,sys)

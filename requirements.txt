@@ -11,4 +11,5 @@ imblearn==0.0
 dill
 tensorflow
 keras
+mlflow
 -e .

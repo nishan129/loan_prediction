@@ -1,7 +1,6 @@
 import os
+from pathlib import Path
 
-TRAIN_FILE_PATH = "D:\Machine Learning project\Loan\Loan Project\loan_prediction\artifact\data_ingestion\data_ingestion\train.parquet"
-TEST_FILE_PATH = "D:\Machine Learning project\Loan\Loan Project\loan_prediction\artifact\data_ingestion\data_ingestion\test.parquet"
 TARGET_COLUMN = "Risk_Flag"
 PIPELINE_NAME:str = "loanpipe"
 ARTIFACT_DIR: str = "artifact"
@@ -16,15 +15,9 @@ TRANS_TEST_FILE_NAME: str = "test.npy"
 PREPROCSSING_OBJECT_FILE_NAME = "preprocessing.pkl"
 MODEL_FILE_NAME = "model.h5"
 SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
+PARAMS_FILE_PATH = Path("params.yaml")
 
-"""
-Train Model Parameters
-"""
-OPTIMIZER = "Adam"
-LOSS = "binary_crossentropy"
-METRIC = "accuracy"
-EPOCHS = 2
-BATCH_SIZE = 32
+
 
 """
 Data Ingestion related constant start with DATA_INGESTION VAR NAME
@@ -60,3 +53,12 @@ MODEL_TRAINER_DIR_NAME:str = "model_trainer"
 MODEL_TRAINER_TRAINED_MODEL_DIR: str = "trained_model"
 MODEL_TRAINER_TRAINED_MODEL_NAME: str = "model.h5"
 MODEL_TRAINER_EXPECTED_SCORE: float = 0.6
+
+
+"""
+Model Evaluation related constant with Model Evaluation var name
+"""
+
+MODEL_EVALUATION_DIR_NAME: str = "model_evaluation"
+MLFLOW_URI:str = "https://dagshub.com/nishan129/loan_prediction.mlflow"
+MODEL_EVALUATION_REPORT_NAME: str = "report.yaml"

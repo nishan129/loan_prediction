@@ -32,3 +32,10 @@ class ModelTrainerArtifact:
     trained_model_file_path: str
     train_metric_artifact : ClassificationMetricArtifact
     test_metric_artifact : ClassificationMetricArtifact
+    
+@dataclass(frozen=True)
+class ModelEvaluationArtifact:
+    model_evaluation_dir : str
+    report_file_name : str
+    all_params: dict
+    train_model_metric_artifact : ClassificationMetricArtifact
