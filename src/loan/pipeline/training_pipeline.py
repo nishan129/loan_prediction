@@ -77,7 +77,7 @@ class TrainPipeline:
                                                data_transformation_artifact=data_transformation_artifact,
                                                data_validation_artifact=data_validation_artifact)
             model_evaluation_artifacts = model_evaluation.initiat_model_evaluation()
-            model_evaluation.log_into_mlflow()
+            #model_evaluation.log_into_mlflow()
             logging.info("Model Evaluation is complete")
         except Exception as e:
             raise ModelException(e,sys)
