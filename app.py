@@ -22,23 +22,23 @@ def index():
     if request.method == 'POST':
         try:
             #  reading the inputs given by the user
-            Income	 =int(request.form['income'])
-            Age =int(request.form['age'])
-            Experience =int(request.form['experience'])
-            Married =str(request.form['married'])
-            House_Ownership	 =str(request.form['house'])
-            Car_Ownership =str(request.form['car'])
-            Profession =str(request.form['profesion'])
-            CITY =str(request.form['city'])
-            STATE =str(request.form['state'])
-            CURRENT_JOB_YRS =int(request.form['jobyear'])
-            CURRENT_HOUSE_YRS =int(request.form['houseyer'])
+            Income	 =int(request.form["income"])
+            Age =int(request.form["age"])
+            Experience =int(request.form["experience"])
+            Married =str(request.form["married"])
+            House_Ownership	 =str(request.form["house"])
+            Car_Ownership =str(request.form["car"])
+            Profession =str(request.form["profesion"])
+            CITY =str(request.form["city"])
+            STATE =str(request.form["state"])
+            CURRENT_JOB_YRS =int(request.form["jobyear"])
+            CURRENT_HOUSE_YRS =int(request.form["houseyer"])
        
          
             data = [Income,Age,Experience,Married,House_Ownership,Car_Ownership,Profession,CITY,STATE,CURRENT_JOB_YRS,CURRENT_HOUSE_YRS]
-            print(data)
+            #print(data)
             data = np.array(data).reshape(1,-1)
-            print(data)
+            #print(data)
             
             
             obj = Prediction()
