@@ -12,4 +12,6 @@ dill
 tensorflow
 keras
 mlflow
+Flask
+Flask-Cors
 -e .

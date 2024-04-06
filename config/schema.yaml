@@ -1,15 +1,5 @@
+
 columns:
-  - class: category
-  - aa_000: int
-  - ac_000: int
-  - ad_000: int
-  - ae_000: int
-  - af_000: int
-  - ag_000: int
-  - ag_001: int
-  - ag_002: int
-columns:
-  - Id: int
   - Income: int
   - Age: int
   - Experience: int
@@ -33,7 +23,6 @@ categorical_columns:
 
 
 numerical_columns:
-  - Id
   - Income
   - Age
   - Experience
