@@ -45,9 +45,9 @@ def index():
             pred = obj.predict(data)
             predict = ""
             if pred == 0:
-                predict = "Your Phone is Hacked "
+                predict = "Your Loan is Not Aprove 😢 But Your Phone is Hacked 😂😂😂 "
             else:
-                predict = "Your Phone is not Hacked Plss Try again"
+                predict = "Your Loan is Not Aprove 😢 But Your Phone is not Hacked Plss Try again"
                 
                 
             #print(predict)

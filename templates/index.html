@@ -40,7 +40,6 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
-                            <h1> Loan Aprovel </h1>
                             <span class="subheading">Loan Aproval Web App</span>
                         </div>
                     </div>
@@ -94,7 +93,12 @@
 
                     <div class="form-row">
                         <label for="married"> Status:</label>
-						<input type="text" name="married" id="married" class="input-text" placeholder="married" required>
+                        <select id="married" name="married" class="form-select">
+                            <option selected>single</option>
+                            <option>married</option>
+                          </select>
+                        <!--label for="married"> Status:</label>
+						<input type="text" name="married" id="married" class="input-text" placeholder="married" required-->
 					</div>
 
 				</div>
@@ -104,27 +108,23 @@
 
                     <div class="form-row">
                         <label for="house"> House Ownership:</label>
-						<input type="text" name="house" id="house" class="input-text" placeholder="house" required>
+                        <select id="house" name="house" class="form-select">
+                            <option selected>rented</option>
+                            <option>owned</option>
+                            <option>norent_noown</option>
+                          </select>
+                        <!--label for="house"> House Ownership:</label>
+						<input type="text" name="house" id="house" class="input-text" placeholder="house" required-->
 					</div>
 
                     <div class="form-row">
-                        <label for="car"> Car Ownership:</label>
-						<input type="text" name="car" id="car" class="input-text" placeholder="car" required>
-					</div>
-
-				</div>
-
-
-                <div class="form-row-total">
-
-                    <div class="form-row">
-                        <label for="profesion">Profession:</label>
-						<input type="text" name="profesion" id="profesion" class="input-text" placeholder="profesion" required>
-					</div>
-
-                    <div class="form-row">
-                        <label for="city"> City:</label>
-						<input type="text" name="city" id="city" class="input-text" placeholder="city" required>
+                        <label for="car" class="form-label">Car Ownership:</label>
+                                <select id="car" name="car" class="form-select">
+                                <option selected>yes</option>
+                                <option>no</option>
+                                </select>
+                        <!-- label for="car"> Car Ownership:</label>
+						<input type="text" name="car" id="car" class="input-text" placeholder="car" required -->
 					</div>
 
 				</div>
@@ -133,8 +133,66 @@
                 <div class="form-row-total">
 
                     <div class="form-row">
-                        <label for="state"> State:</label>
-						<input type="text" name="state" id="state" class="input-text" placeholder="state" required>
+                        <label for="profesion" class="form-label">Profession:</label>
+                            <select id="profesion" name="profesion" class="form-select">
+                            <option selected>Magistrate</option>
+                            <option>Comedian</option>
+                            <option selected>Microbiologist</option>
+                            <option>Chartered_Accountant</option>
+                            <option selected>Psychologist</option>
+                            <option>Software_Developer</option>
+                            </select>
+                        <!-- label for="profesion">Profession:</label>
+						<input type="text" name="profesion" id="profesion" class="input-text" placeholder="profesion" required -->
+					</div>
+
+                    <div class="form-row">
+                        <label for="city" name="city" id="city" class="form-label">City:</label>
+                            <select id="city" name="city" class="form-select">
+                            <option >Amravati</option>
+                            <option>Salem</option>
+                            <option>Durg</option>
+                            <option>Mirzapur</option>
+                            <option >Bhilai</option>
+                            <option>Pune</option>
+                            </select>
+                        <!--label for="city"> City:</label>
+						<input type="text" name="city" id="city" class="input-text" placeholder="city" required -->
+					</div>
+
+				</div>
+
+
+                <div class="form-row-total">
+
+                    <div class="form-row">
+                        
+                        <label for="state" class="form-label">State:</label>
+            <select id="state" class="form-select" type="text" name="state" id="state">
+              <option selected>Andhra_Pradesh</option>
+              <option>Assam</option>
+              <option >Bihar</option>
+              <option>Chhattisgarh</option>
+              <option >Chandigarh</option>
+              <option>Delhi</option>
+              <option>Gujarat</option>
+              <option >Haryana</option>
+              <option>Himachal_Pradesh</option>
+              <option >Jammu_and_Kashmir</option>
+              <option>Jharkhand</option>
+              <option>Karnataka</option>
+              <option >Kerala</option>
+              <option>Madhya_Pradesh</option>
+              <option>Maharashtra</option>
+              <option >Manipur</option>
+              <option>Mizoram</option>
+              <option >Odisha</option>
+              <option>Puducherry</option>
+              <option >Punjab</option>
+              <option>Sikkim</option>
+            </select>
+                    <!-- label for="state"> State:</label>
+					<input type="text" name="state" id="state" class="input-text" placeholder="state" required -->
 					</div>
 
                     <div class="form-row">
